@@ -1,0 +1,39 @@
+#%% Specify model parameters
+
+run_name: run_20251121
+
+simulation_parameters:
+  timestep: 1 # Simulation timestep. All model parameters are in units of days
+  origin_date: 2020-01-01  # Day corresponding to t = 0
+  start_day: -30  # Start time for simulation
+  end_day: 121  # End time for simulation
+  t_eval:  # Date range and frequency simulation output
+    start_date: 2020-01-01
+    end_date: 2020-04-30 # Note currently end_day needs to be greater than day of end_date for correct output
+    freq: W-MON
+  #network_fips_codes: [36005, 36047, 36061, 36081, 36085] # List of FIPS codes of simulation network
+  network_fips_codes: [53033, 53053, 53061, 53063, 53011, 53067]
+  social_distancing_parameters:
+    social_distancing_start_date: 2020-03-01
+  outbreak_seeding_parameters:
+    seed_fips_codes: [53033] # List of FIPS codes where outbreak is seeded
+    seed_date: 2020-02-12
+    seed_size: 100  # Model seeds seed_size exposed individuals in each seed county
+
+default_model_parameters: # Note: code is not robust to changes in order of this dict
+  R0: 2.6  # Basic reproductive number
+  infectious_period: 5.
+  latent_period: 2.  # latent period of 2 days, infectious 1 day before symptom onset, mean infectious period of 5 days, 3.8 day doubling time
+  mean_lifespan: 27886  # Average lifespan in days (76.4 yrs)
+  reporting_probability: 0.006  # Probability of reporting (currently estimated probability of death)
+  v: 0  # Vaccine coverage (not currently used)
+  eta: 0.0  # Contribution of importations from outside spatial network to the force of infection
+  mean_trip_duration: 2.  # Average duration of movement outside home county
+  local_coef: 0.5  # Coefficient for local transmission reduction data (0 = no reduction)
+  fixed_reduction_coef: 0.4  # Constant reduction to contact rates after social distancing start (constant across space and time)
+
+iterated_filtering_parameters:
+  par_sd:
+    R0: 1e-3
+  alpha: 0.8
+
